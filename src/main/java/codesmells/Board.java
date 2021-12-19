@@ -28,11 +28,6 @@ public class Board {
     }
 
     public void AddTileAt(char symbol, int x, int y) {
-        Tile newTile = new Tile();
-        newTile.X = x;
-        newTile.Y = y;
-        newTile.Symbol = symbol;
-
         TileAt(x, y).Symbol = symbol;
     }
 }
