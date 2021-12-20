@@ -27,11 +27,15 @@ public class Board {
     }
 
     private boolean validateRow(int x) {
-        if (isMarked(Position.from(x, 0))) {
-            return isThreeInRow(x, getTile(Position.from(x, 0)));
-        } else {
+        if (isNotMarked(x)) {
             return false;
         }
+
+        return isThreeInRow(x, getTile(Position.from(x, 0)));
+    }
+
+    private boolean isNotMarked(int x) {
+        return !isMarked(Position.from(x, 0));
     }
 
     private boolean isThreeInRow(int x, Tile firstTile) {
