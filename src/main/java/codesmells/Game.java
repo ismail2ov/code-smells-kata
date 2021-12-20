@@ -20,7 +20,7 @@ public class Game {
 
     private void updateGameState(Mark mark, int x, int y) {
         _lastSymbol = mark;
-        _board.AddTileAt(mark, x, y);
+        _board.markTileAt(mark, x, y);
     }
 
     private boolean isRepeatedPlay(Mark mark) {

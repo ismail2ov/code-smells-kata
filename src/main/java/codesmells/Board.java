@@ -4,34 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private List<Tile> _plays = new ArrayList<>();
+    private final List<Tile> tiles = new ArrayList<>();
 
     public Board() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                _plays.add(Tile.empty(Position.from(i, j)));
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
+                tiles.add(Tile.empty(Position.from(row, column)));
             }
         }
     }
 
-    public Tile TileAt(int x, int y) {
-        for (Tile t : _plays) {
-            if (t.getPosition().equals(Position.from(x, y))) {
-                return t;
-            }
-        }
-        return null;
+    public Tile getTile(int x, int y) {
+        return tiles.stream().filter(t -> t.getPosition().equals(Position.from(x, y))).findFirst().orElse(null);
     }
 
-    public void AddTileAt(Mark mark, int x, int y) {
-        TileAt(x, y).setMark(mark);
+    public void markTileAt(Mark mark, int x, int y) {
+        getTile(x, y).setMark(mark);
     }
 
     Mark threeInRow() {
         for (int row = 0; row < 3; row++) {
-            Mark board = validateRow(row);
-            if (board != null) {
-                return board;
+            Mark mark = validateRow(row);
+            if (mark != null) {
+                return mark;
             }
         }
 
@@ -40,16 +35,14 @@ public class Board {
 
     private Mark validateRow(int x) {
         if (isMarked(x, 0) && isMarked(x, 1) && isMarked(x, 2)) {
-            if (TileAt(x, 0).getMark() ==
-                    TileAt(x, 1).getMark() &&
-                    TileAt(x, 2).getMark() == TileAt(x, 1).getMark()) {
-                return TileAt(x, 0).getMark();
+            if (getTile(x, 0).getMark() == getTile(x, 1).getMark() && getTile(x, 2).getMark() == getTile(x, 1).getMark()) {
+                return getTile(x, 0).getMark();
             }
         }
         return null;
     }
 
     boolean isMarked(int x, int y) {
-        return TileAt(x, y).getMark() != Mark.NONE;
+        return getTile(x, y).getMark() != Mark.NONE;
     }
 }
