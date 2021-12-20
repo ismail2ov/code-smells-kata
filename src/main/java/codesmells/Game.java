@@ -11,7 +11,7 @@ public class Game {
             }
         } else if (isRepeatedPlay(symbol)) {
             throw new Exception("Invalid next player");
-        } else if (isMarked(x, y)) {
+        } else if (_board.isMarked(x, y)) {
             throw new Exception("Invalid position");
         }
 
@@ -21,10 +21,6 @@ public class Game {
     private void updateGameState(char symbol, int x, int y) {
         _lastSymbol = symbol;
         _board.AddTileAt(symbol, x, y);
-    }
-
-    private boolean isMarked(int x, int y) {
-        return _board.TileAt(x, y).Symbol != ' ';
     }
 
     private boolean isRepeatedPlay(char symbol) {
@@ -39,26 +35,9 @@ public class Game {
         return _lastSymbol == ' ';
     }
 
-    public char Winner() {
-        for (int row = 0; row < 3; row++) {
-            Character board = validateRow(row);
-            if (board != null) {
-                return board;
-            }
-        }
-
-        return ' ';
+    public char winner() {
+        return _board.threeInRow();
     }
 
-    private Character validateRow(int x) {
-        if (isMarked(x, 0) && isMarked(x, 1) && isMarked(x, 2)) {
-            if (_board.TileAt(x, 0).Symbol ==
-                    _board.TileAt(x, 1).Symbol &&
-                    _board.TileAt(x, 2).Symbol == _board.TileAt(x, 1).Symbol) {
-                return _board.TileAt(x, 0).Symbol;
-            }
-        }
-        return null;
-    }
 }
 

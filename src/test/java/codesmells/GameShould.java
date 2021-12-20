@@ -57,7 +57,7 @@ public class GameShould {
         game.Play('O', 1, 1);
         game.Play('X', 0, 2);
 
-        char winner = game.Winner();
+        char winner = game.winner();
 
         assertThat(winner).isEqualTo('X');
     }
@@ -71,7 +71,7 @@ public class GameShould {
         game.Play('X', 1, 1);
         game.Play('O', 0, 2);
 
-        char winner = game.Winner();
+        char winner = game.winner();
 
         assertThat(winner).isEqualTo('O');
     }
@@ -84,7 +84,7 @@ public class GameShould {
         game.Play('O', 0, 1);
         game.Play('X', 1, 2);
 
-        char winner = game.Winner();
+        char winner = game.winner();
 
         assertThat(winner).isEqualTo('X');
     }
@@ -98,7 +98,7 @@ public class GameShould {
         game.Play('X', 2, 1);
         game.Play('O', 1, 2);
 
-        char winner = game.Winner();
+        char winner = game.winner();
 
         assertThat(winner).isEqualTo('O');
     }
@@ -111,7 +111,7 @@ public class GameShould {
         game.Play('O', 0, 1);
         game.Play('X', 2, 2);
 
-        char winner = game.Winner();
+        char winner = game.winner();
 
         assertThat(winner).isEqualTo('X');
     }
@@ -125,7 +125,7 @@ public class GameShould {
         game.Play('X', 1, 1);
         game.Play('O', 2, 2);
 
-        char winner = game.Winner();
+        char winner = game.winner();
 
         assertThat(winner).isEqualTo('O');
     }
