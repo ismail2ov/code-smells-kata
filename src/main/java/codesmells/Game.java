@@ -6,7 +6,7 @@ public class Game {
 
     public void Play(char symbol, int x, int y) throws Exception {
         if (isFirstMove()) {
-            if (isPlaterO(symbol)) {
+            if (isPlayerO(symbol)) {
                 throw new Exception("Invalid first player");
             }
         } else if (isRepeatedPlay(symbol)) {
@@ -31,7 +31,7 @@ public class Game {
         return symbol == _lastSymbol;
     }
 
-    private boolean isPlaterO(char symbol) {
+    private boolean isPlayerO(char symbol) {
         return symbol == 'O';
     }
 
@@ -40,45 +40,25 @@ public class Game {
     }
 
     public char Winner() {
-        //if the positions in first row are taken
-        if (_board.TileAt(0, 0).Symbol != ' ' &&
-                _board.TileAt(0, 1).Symbol != ' ' &&
-                _board.TileAt(0, 2).Symbol != ' ') {
-            //if first row is full with same symbol
-            if (_board.TileAt(0, 0).Symbol ==
-                    _board.TileAt(0, 1).Symbol &&
-                    _board.TileAt(0, 2).Symbol == _board.TileAt(0, 1).Symbol) {
-                return _board.TileAt(0, 0).Symbol;
-            }
-        }
-
-        //if the positions in first row are taken
-        if (_board.TileAt(1, 0).Symbol != ' ' &&
-                _board.TileAt(1, 1).Symbol != ' ' &&
-                _board.TileAt(1, 2).Symbol != ' ') {
-            //if middle row is full with same symbol
-            if (_board.TileAt(1, 0).Symbol ==
-                    _board.TileAt(1, 1).Symbol &&
-                    _board.TileAt(1, 2).Symbol ==
-                            _board.TileAt(1, 1).Symbol) {
-                return _board.TileAt(1, 0).Symbol;
-            }
-        }
-
-        //if the positions in first row are taken
-        if (_board.TileAt(2, 0).Symbol != ' ' &&
-                _board.TileAt(2, 1).Symbol != ' ' &&
-                _board.TileAt(2, 2).Symbol != ' ') {
-            //if middle row is full with same symbol
-            if (_board.TileAt(2, 0).Symbol ==
-                    _board.TileAt(2, 1).Symbol &&
-                    _board.TileAt(2, 2).Symbol ==
-                            _board.TileAt(2, 1).Symbol) {
-                return _board.TileAt(2, 0).Symbol;
+        for (int row = 0; row < 3; row++) {
+            Character board = validateRow(row);
+            if (board != null) {
+                return board;
             }
         }
 
         return ' ';
+    }
+
+    private Character validateRow(int x) {
+        if (isMarked(x, 0) && isMarked(x, 1) && isMarked(x, 2)) {
+            if (_board.TileAt(x, 0).Symbol ==
+                    _board.TileAt(x, 1).Symbol &&
+                    _board.TileAt(x, 2).Symbol == _board.TileAt(x, 1).Symbol) {
+                return _board.TileAt(x, 0).Symbol;
+            }
+        }
+        return null;
     }
 }
 
