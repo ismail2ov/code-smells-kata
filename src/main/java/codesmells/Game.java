@@ -5,18 +5,24 @@ public class Game {
     private final Board board = new Board();
 
     public void Play(Mark mark, Position position) throws Exception {
-        if (isFirstMove()) {
-            if (isPlayerO(mark)) {
-                throw new Exception("Invalid first player");
-            }
-        } else if (isRepeatedPlay(mark)) {
+        if (isFirstPlayInvalid(mark)) {
+            throw new Exception("Invalid first player");
+        }
+
+        if (isRepeatedPlay(mark)) {
             throw new Exception("Invalid next player");
-        } else if (board.isMarked(position)) {
+        }
+
+        if (board.isMarked(position)) {
             throw new Exception("Invalid position");
         }
 
         lastMark = mark;
         board.markTileAt(mark, position);
+    }
+
+    private boolean isFirstPlayInvalid(Mark mark) {
+        return isFirstMove() && isPlayerO(mark);
     }
 
     private boolean isRepeatedPlay(Mark mark) {
