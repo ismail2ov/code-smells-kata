@@ -9,18 +9,14 @@ public class Board {
     public Board() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                Tile tile = new Tile();
-                tile.X = i;
-                tile.Y = j;
-                tile.setMark(Mark.NONE);
-                _plays.add(tile);
+                _plays.add(Tile.empty(Position.from(i, j)));
             }
         }
     }
 
     public Tile TileAt(int x, int y) {
         for (Tile t : _plays) {
-            if (t.X == x && t.Y == y) {
+            if (t.getPosition().equals(Position.from(x, y))) {
                 return t;
             }
         }

@@ -1,10 +1,15 @@
 package codesmells;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Tile {
-    public int X;
-    public int Y;
+    private final Position position;
     private Mark mark;
+
+    public static Tile empty(Position position) {
+        return new Tile(position, Mark.NONE);
+    }
 }
