@@ -16,46 +16,46 @@ public class GameShould {
 
     @Test
     public void not_allow_player_oto_play_first() {
-        Throwable thrown = catchThrowable(() -> game.Play(Mark.O, 0, 0));
+        Throwable thrown = catchThrowable(() -> game.Play(Mark.O, Position.from(0, 0)));
 
         assertThat(thrown).isInstanceOf(Exception.class);
     }
 
     @Test
     public void not_allow_player_x_to_play_twice_in_a_row() throws Exception {
-        game.Play(Mark.X, 0, 0);
+        game.Play(Mark.X, Position.from(0, 0));
 
-        Throwable thrown = catchThrowable(() -> game.Play(Mark.X, 1, 0));
+        Throwable thrown = catchThrowable(() -> game.Play(Mark.X, Position.from(1, 0)));
 
         assertThat(thrown).isInstanceOf(Exception.class);
     }
 
     @Test
     public void not_allow_player_to_play_in_last_played_position() throws Exception {
-        game.Play(Mark.X, 0, 0);
+        game.Play(Mark.X, Position.from(0, 0));
 
-        Throwable thrown = catchThrowable(() -> game.Play(Mark.O, 0, 0));
+        Throwable thrown = catchThrowable(() -> game.Play(Mark.O, Position.from(0, 0)));
 
         assertThat(thrown).isInstanceOf(Exception.class);
     }
 
     @Test
     public void not_allow_player_to_play_in_any_played_position() throws Exception {
-        game.Play(Mark.X, 0, 0);
-        game.Play(Mark.O, 1, 0);
+        game.Play(Mark.X, Position.from(0, 0));
+        game.Play(Mark.O, Position.from(1, 0));
 
-        Throwable thrown = catchThrowable(() -> game.Play(Mark.X, 0, 0));
+        Throwable thrown = catchThrowable(() -> game.Play(Mark.X, Position.from(0, 0)));
 
         assertThat(thrown).isInstanceOf(Exception.class);
     }
 
     @Test
     public void declare_player_x_as_a_winner_if_three_in_top_row() throws Exception {
-        game.Play(Mark.X, 0, 0);
-        game.Play(Mark.O, 1, 0);
-        game.Play(Mark.X, 0, 1);
-        game.Play(Mark.O, 1, 1);
-        game.Play(Mark.X, 0, 2);
+        game.Play(Mark.X, Position.from(0, 0));
+        game.Play(Mark.O, Position.from(1, 0));
+        game.Play(Mark.X, Position.from(0, 1));
+        game.Play(Mark.O, Position.from(1, 1));
+        game.Play(Mark.X, Position.from(0, 2));
 
         Mark winner = game.winner();
 
@@ -64,12 +64,12 @@ public class GameShould {
 
     @Test
     public void declare_player_o_as_a_winner_if_three_in_top_row() throws Exception {
-        game.Play(Mark.X, 2, 2);
-        game.Play(Mark.O, 0, 0);
-        game.Play(Mark.X, 1, 0);
-        game.Play(Mark.O, 0, 1);
-        game.Play(Mark.X, 1, 1);
-        game.Play(Mark.O, 0, 2);
+        game.Play(Mark.X, Position.from(2, 2));
+        game.Play(Mark.O, Position.from(0, 0));
+        game.Play(Mark.X, Position.from(1, 0));
+        game.Play(Mark.O, Position.from(0, 1));
+        game.Play(Mark.X, Position.from(1, 1));
+        game.Play(Mark.O, Position.from(0, 2));
 
         Mark winner = game.winner();
 
@@ -78,11 +78,11 @@ public class GameShould {
 
     @Test
     public void declare_player_x_as_a_winner_if_three_in_middle_row() throws Exception {
-        game.Play(Mark.X, 1, 0);
-        game.Play(Mark.O, 0, 0);
-        game.Play(Mark.X, 1, 1);
-        game.Play(Mark.O, 0, 1);
-        game.Play(Mark.X, 1, 2);
+        game.Play(Mark.X, Position.from(1, 0));
+        game.Play(Mark.O, Position.from(0, 0));
+        game.Play(Mark.X, Position.from(1, 1));
+        game.Play(Mark.O, Position.from(0, 1));
+        game.Play(Mark.X, Position.from(1, 2));
 
         Mark winner = game.winner();
 
@@ -91,12 +91,12 @@ public class GameShould {
 
     @Test
     public void declare_player_o_as_a_winner_if_three_in_middle_row() throws Exception {
-        game.Play(Mark.X, 0, 0);
-        game.Play(Mark.O, 1, 0);
-        game.Play(Mark.X, 2, 0);
-        game.Play(Mark.O, 1, 1);
-        game.Play(Mark.X, 2, 1);
-        game.Play(Mark.O, 1, 2);
+        game.Play(Mark.X, Position.from(0, 0));
+        game.Play(Mark.O, Position.from(1, 0));
+        game.Play(Mark.X, Position.from(2, 0));
+        game.Play(Mark.O, Position.from(1, 1));
+        game.Play(Mark.X, Position.from(2, 1));
+        game.Play(Mark.O, Position.from(1, 2));
 
         Mark winner = game.winner();
 
@@ -105,11 +105,11 @@ public class GameShould {
 
     @Test
     public void declare_player_x_as_a_winner_if_three_in_bottom_row() throws Exception {
-        game.Play(Mark.X, 2, 0);
-        game.Play(Mark.O, 0, 0);
-        game.Play(Mark.X, 2, 1);
-        game.Play(Mark.O, 0, 1);
-        game.Play(Mark.X, 2, 2);
+        game.Play(Mark.X, Position.from(2, 0));
+        game.Play(Mark.O, Position.from(0, 0));
+        game.Play(Mark.X, Position.from(2, 1));
+        game.Play(Mark.O, Position.from(0, 1));
+        game.Play(Mark.X, Position.from(2, 2));
 
         Mark winner = game.winner();
 
@@ -118,12 +118,12 @@ public class GameShould {
 
     @Test
     public void declare_player_o_as_a_winner_if_three_in_bottom_row() throws Exception {
-        game.Play(Mark.X, 0, 0);
-        game.Play(Mark.O, 2, 0);
-        game.Play(Mark.X, 1, 0);
-        game.Play(Mark.O, 2, 1);
-        game.Play(Mark.X, 1, 1);
-        game.Play(Mark.O, 2, 2);
+        game.Play(Mark.X, Position.from(0, 0));
+        game.Play(Mark.O, Position.from(2, 0));
+        game.Play(Mark.X, Position.from(1, 0));
+        game.Play(Mark.O, Position.from(2, 1));
+        game.Play(Mark.X, Position.from(1, 1));
+        game.Play(Mark.O, Position.from(2, 2));
 
         Mark winner = game.winner();
 

@@ -1,30 +1,26 @@
 package codesmells;
 
 public class Game {
-    private Mark _lastSymbol = Mark.NONE;
-    private Board _board = new Board();
+    private Mark lastMark = Mark.NONE;
+    private final Board board = new Board();
 
-    public void Play(Mark mark, int x, int y) throws Exception {
+    public void Play(Mark mark, Position position) throws Exception {
         if (isFirstMove()) {
             if (isPlayerO(mark)) {
                 throw new Exception("Invalid first player");
             }
         } else if (isRepeatedPlay(mark)) {
             throw new Exception("Invalid next player");
-        } else if (_board.isMarked(Position.from(x, y))) {
+        } else if (board.isMarked(position)) {
             throw new Exception("Invalid position");
         }
 
-        updateGameState(mark, x, y);
-    }
-
-    private void updateGameState(Mark mark, int x, int y) {
-        _lastSymbol = mark;
-        _board.markTileAt(mark, Position.from(x, y));
+        lastMark = mark;
+        board.markTileAt(mark, position);
     }
 
     private boolean isRepeatedPlay(Mark mark) {
-        return mark == _lastSymbol;
+        return mark == lastMark;
     }
 
     private boolean isPlayerO(Mark mark) {
@@ -32,12 +28,12 @@ public class Game {
     }
 
     private boolean isFirstMove() {
-        return _lastSymbol == Mark.NONE;
+        return lastMark == Mark.NONE;
     }
 
     public Mark winner() {
-        if (_board.threeInRow()) {
-            return _lastSymbol;
+        if (board.threeInRow()) {
+            return lastMark;
         }
         return Mark.NONE;
     }
