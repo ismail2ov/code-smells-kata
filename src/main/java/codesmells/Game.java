@@ -5,25 +5,38 @@ public class Game {
     private Board _board = new Board();
 
     public void Play(char symbol, int x, int y) throws Exception {
-        //if first move
-        if (_lastSymbol == ' ') {
-            //if player is X
-            if (symbol == 'O') {
+        if (isFirstMove()) {
+            if (isPlaterO(symbol)) {
                 throw new Exception("Invalid first player");
             }
-        }
-        //if not first move but player repeated
-        else if (symbol == _lastSymbol) {
+        } else if (isRepeatedPlay(symbol)) {
             throw new Exception("Invalid next player");
-        }
-        //if not first move but play on an already played tile
-        else if (_board.TileAt(x, y).Symbol != ' ') {
+        } else if (isMarked(x, y)) {
             throw new Exception("Invalid position");
         }
 
-        // update game state
+        updateGameState(symbol, x, y);
+    }
+
+    private void updateGameState(char symbol, int x, int y) {
         _lastSymbol = symbol;
         _board.AddTileAt(symbol, x, y);
+    }
+
+    private boolean isMarked(int x, int y) {
+        return _board.TileAt(x, y).Symbol != ' ';
+    }
+
+    private boolean isRepeatedPlay(char symbol) {
+        return symbol == _lastSymbol;
+    }
+
+    private boolean isPlaterO(char symbol) {
+        return symbol == 'O';
+    }
+
+    private boolean isFirstMove() {
+        return _lastSymbol == ' ';
     }
 
     public char Winner() {
