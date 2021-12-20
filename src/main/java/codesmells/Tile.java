@@ -12,4 +12,8 @@ public class Tile {
     public static Tile empty(Position position) {
         return new Tile(position, Mark.NONE);
     }
+
+    public boolean hasSameMarkAs(Tile other) {
+        return this.mark.equals(other.getMark());
+    }
 }

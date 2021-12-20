@@ -11,7 +11,7 @@ public class Game {
             }
         } else if (isRepeatedPlay(mark)) {
             throw new Exception("Invalid next player");
-        } else if (_board.isMarked(x, y)) {
+        } else if (_board.isMarked(Position.from(x, y))) {
             throw new Exception("Invalid position");
         }
 
@@ -20,7 +20,7 @@ public class Game {
 
     private void updateGameState(Mark mark, int x, int y) {
         _lastSymbol = mark;
-        _board.markTileAt(mark, x, y);
+        _board.markTileAt(mark, Position.from(x, y));
     }
 
     private boolean isRepeatedPlay(Mark mark) {
@@ -36,7 +36,10 @@ public class Game {
     }
 
     public Mark winner() {
-        return _board.threeInRow();
+        if (_board.threeInRow()) {
+            return _lastSymbol;
+        }
+        return Mark.NONE;
     }
 
 }

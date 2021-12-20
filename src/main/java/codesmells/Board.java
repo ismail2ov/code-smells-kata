@@ -14,35 +14,31 @@ public class Board {
         }
     }
 
-    public Tile getTile(int x, int y) {
-        return tiles.stream().filter(t -> t.getPosition().equals(Position.from(x, y))).findFirst().orElse(null);
+    public Tile getTile(Position position) {
+        return tiles.stream().filter(t -> t.getPosition().equals(position)).findFirst().orElse(null);
     }
 
-    public void markTileAt(Mark mark, int x, int y) {
-        getTile(x, y).setMark(mark);
+    public void markTileAt(Mark mark, Position position) {
+        getTile(position).setMark(mark);
     }
 
-    Mark threeInRow() {
-        for (int row = 0; row < 3; row++) {
-            Mark mark = validateRow(row);
-            if (mark != null) {
-                return mark;
-            }
+    boolean threeInRow() {
+        return validateRow(0) || validateRow(1) || validateRow(2);
+    }
+
+    private boolean validateRow(int x) {
+        if (isMarked(Position.from(x, 0))) {
+            return isThreeInRow(x, getTile(Position.from(x, 0)));
+        } else {
+            return false;
         }
-
-        return Mark.NONE;
     }
 
-    private Mark validateRow(int x) {
-        if (isMarked(x, 0) && isMarked(x, 1) && isMarked(x, 2)) {
-            if (getTile(x, 0).getMark() == getTile(x, 1).getMark() && getTile(x, 2).getMark() == getTile(x, 1).getMark()) {
-                return getTile(x, 0).getMark();
-            }
-        }
-        return null;
+    private boolean isThreeInRow(int x, Tile firstTile) {
+        return getTile(Position.from(x, 1)).hasSameMarkAs(firstTile) && getTile(Position.from(x, 2)).hasSameMarkAs(firstTile);
     }
 
-    boolean isMarked(int x, int y) {
-        return getTile(x, y).getMark() != Mark.NONE;
+    boolean isMarked(Position position) {
+        return getTile(position).getMark() != Mark.NONE;
     }
 }
