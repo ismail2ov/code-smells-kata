@@ -12,7 +12,7 @@ public class Board {
                 Tile tile = new Tile();
                 tile.X = i;
                 tile.Y = j;
-                tile.Symbol = ' ';
+                tile.setMark(Mark.NONE);
                 _plays.add(tile);
             }
         }
@@ -27,33 +27,33 @@ public class Board {
         return null;
     }
 
-    public void AddTileAt(char symbol, int x, int y) {
-        TileAt(x, y).Symbol = symbol;
+    public void AddTileAt(Mark mark, int x, int y) {
+        TileAt(x, y).setMark(mark);
     }
 
-    char threeInRow() {
+    Mark threeInRow() {
         for (int row = 0; row < 3; row++) {
-            Character board = validateRow(row);
+            Mark board = validateRow(row);
             if (board != null) {
                 return board;
             }
         }
 
-        return ' ';
+        return Mark.NONE;
     }
 
-    private Character validateRow(int x) {
+    private Mark validateRow(int x) {
         if (isMarked(x, 0) && isMarked(x, 1) && isMarked(x, 2)) {
-            if (TileAt(x, 0).Symbol ==
-                    TileAt(x, 1).Symbol &&
-                    TileAt(x, 2).Symbol == TileAt(x, 1).Symbol) {
-                return TileAt(x, 0).Symbol;
+            if (TileAt(x, 0).getMark() ==
+                    TileAt(x, 1).getMark() &&
+                    TileAt(x, 2).getMark() == TileAt(x, 1).getMark()) {
+                return TileAt(x, 0).getMark();
             }
         }
         return null;
     }
 
     boolean isMarked(int x, int y) {
-        return TileAt(x, y).Symbol != ' ';
+        return TileAt(x, y).getMark() != Mark.NONE;
     }
 }

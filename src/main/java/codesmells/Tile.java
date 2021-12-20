@@ -1,7 +1,10 @@
 package codesmells;
 
+import lombok.Data;
+
+@Data
 public class Tile {
     public int X;
     public int Y;
-    public char Symbol;
+    private Mark mark;
 }
